@@ -1,0 +1,106 @@
+<div class="sing-log-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-3">
+              <div class="form-area">
+                <div class="form-sing">
+                    <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="#login" class="nav-link active" data-bs-toggle="tab">Sign In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#profile" class="nav-link" data-bs-toggle="tab">Sign Up</a>
+                            </li>
+                    </ul>
+                    <div class="tab-content">
+                            <div class="tab-pane fade show active" id="login">
+                                <form [formGroup]="loginForm">
+                                <div class="form-bor">
+                                    <div class="form-input-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" formControlName="username">
+                                        <div class="text-danger">
+                                            @if(loginForm.controls['username'].touched && loginForm.controls['username'].errors?.['required']){
+                                                <span>Username is required</span>
+                                            }
+                                            @else if (loginForm.controls['username'].touched && loginForm.controls['username'].errors?.['minlength']) {
+                                                <span>Username should be atleast 3 characters</span>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="form-input-group">
+                                        <label for="upassword">Password</label>
+                                        <input type="password" autocomplete="off" formControlName="upassword">
+                                        <div class="text-danger">
+                                            @if(loginForm.controls['upassword'].touched && loginForm.controls['upassword'].errors?.['required']){
+                                                <span>Password is required</span>
+                                            }
+                                            @else if (loginForm.controls['upassword'].touched && loginForm.controls['upassword'].errors?.['minlength']) {
+                                                <span>Atleast 5 Character required</span>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-input-group">
+                                        <button [disabled]="loginForm.invalid" type="submit" (click)="onLoginSave()">Sign in</button>
+                                    </div>
+                                 </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="profile">
+                                <form  [formGroup]="userForm">
+                                    <div class="form-bor">
+                                      <div class="form-input-group">
+                                        <label for="username">Username<span class="text-danger"> (*)</span></label>
+                                        <input type="text" placeholder="User Name" formControlName="username">
+                                            <div class="text-danger">
+                                                @if(userForm.controls['username'].touched && userForm.controls['username'].errors?.['required']){
+                                                    <span>Username is required</span>
+                                                }
+                                                @else if (userForm.controls['username'].touched && userForm.controls['username'].errors?.['minlength']) {
+                                                    <span>Username should be atleast 3 characters</span>
+                                                }
+                                            </div>
+                                      </div>
+                  
+                                      <div class="form-input-group">
+                                        <label for="uremail">Email<span class="text-danger"> (*)</span></label>
+                                        <input type="email" placeholder="Email" formControlName="uremail">
+                                        <div class="text-danger">
+                                            @if(userForm.controls['uremail'].touched && userForm.controls['uremail'].errors?.['required']){
+                                                <span>Email is required</span>
+                                            }
+                                            @else if (userForm.controls['uremail'].touched && userForm.controls['uremail'].errors?.['email']) {
+                                                <span>Enter valid email address</span>
+                                            }
+                                        </div>
+                                      </div>
+                  
+                                      <div class="form-input-group">
+                                        <label for="upassword">Password<span class="text-danger"> (*)</span></label>
+                                        <input type="password" placeholder="Password" autocomplete="off" formControlName="upassword">
+                                        <div class="text-danger">
+                                            @if(userForm.controls['upassword'].touched && userForm.controls['upassword'].errors?.['required']){
+                                            <span>Password is required</span>
+                                            }
+                                            @else if (userForm.controls['upassword'].touched && userForm.controls['upassword'].errors?.['minlength']) {
+                                                <span>Atleast 5 characters Required</span>
+                                            }
+                                        </div>
+                                      </div>
+                  
+                                      <div class="form-input-group">
+                                        <button [disabled]="userForm.invalid" type="button" (click)="onUserRegSave()">Sign Up</button>
+                                      </div>
+                                    </div>
+                                  </form>
+        
+                            </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div> 
+
+    </div>
+</div>

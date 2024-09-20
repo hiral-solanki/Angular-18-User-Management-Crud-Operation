@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row" *ngIf="isLogged; else notLogged ">
+        <h1 class="text-center mb-5 mt-3 text-success">{{ title | uppercase }} </h1>
+        <div *ngIf="isLogged">
+            <div class="col-6 float-start">
+                <h3 class="text-uppercase">Profile Picture</h3>
+                <p>
+                    @if(userImage==''){
+                        <img src="profile/user.png" width="500px" height="500px;">
+                    }
+                    @else {
+                        <img [attr.src]="userImage" width="500px" height="500px;">
+                    }
+                </p>
+            </div>
+            <div class="col-6 float-end">
+                <h3 class="text-uppercase">Set New Profile Picture</h3>
+                <div class="col-12">
+                    <label for="">Profile Image<span class="text-danger">&nbsp;*</span></label>
+                    <input type="file" id="uimage" #uimage name="uimage" class="form-control border-success" (change)="onFileSelected($event)">
+                    <div *ngIf="file">
+                        <section class="file-info">
+                            File Details:
+                            <ul>
+                                <li>Name : {{ file.name }}</li>
+                                <li>Type : {{ file.type }}</li>
+                                <li>Size : {{ file.size }}</li>
+                            </ul>
+                        </section>
+                    </div>
+                    <p class="text-center mt-2"><button (click)="saveFile()" type="button" class="btn btn-success">Upload</button></p>
+                    <section [ngSwitch]="status" class="waveText">
+                            <p *ngSwitchCase="'uploading'" class="text-primary fw-bold"><span>Uploading...</span></p>
+                            <p *ngSwitchCase="'success'" class="text-success fw-bold">File Upload Successfully..</p>
+                            <p *ngSwitchCase="'fail'" class="text-danger fw-bold">Error in file uploading!</p>
+                            <p *ngSwitchCase="'wait'" class="text-info fw-bold" ><span>Waiting to upload....</span></p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    <ng-template #notLogged>
+        <div class="mt-2 p-2 bg-secondary text-white rounded">Please Login to continue!</div>
+    </ng-template>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-12">
+        <div class="container">
+          <form>
+          <h1 class="text-uppercase">{{ title }}</h1>
+          <div class="row col-md-12">
+            <form #userForm (ngSubmit)="validate()">
+
+            </form>
+              <div class="col-4">
+                <label for="ufullname" class="form-label">Fullname </label>
+                <input type="text" id="ufullname" class="form-control border border-primary" [(ngModel)]="userObj.ufullname" name="ufullname" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+                <div class="col-4">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" class="form-control border border-primary" [(ngModel)]="userObj.username" name="username" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label for="uremail" class="form-label">Email</label>
+                  <input type="text" class="form-control border border-primary" [(ngModel)]="userObj.uremail" name="uremail" id="uremail" required>
+                  <div class="invalid-feedback">
+                    Please provide a valid email.
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label for="upassword" class="form-label">Password 
+                      <input tabindex="-1" type="checkbox" (click)="showPass()"> {{show ? 'Hide' : 'Show'}}
+
+                  </label>
+                  <input [type]=" show ? 'text' : 'password'" [(ngModel)]="userObj.upassword" autocomplete="off"  class="form-control border border-primary" id="upassword" name="upassword" required>
+                  <div class="invalid-feedback">
+                    Please provide a valid password.
+                  </div>
+                </div>
+                @if(mode== 'C'){
+                  <div class="col-4">
+                    <label for="urole" class="form-label">Role</label>
+                    <div class="form-control border border-primary">
+                      <input type="radio" [(ngModel)]="userObj.urole" class="text-center" name="urole" checked="checked" required value="User"> User
+                      <input type="radio" [(ngModel)]="userObj.urole" class="text-center" name="urole" required value="Admin"> Admin
+                      <div class="invalid-feedback">
+                        Please Select a valid Role.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <label for="is_active" class="form-label">Status</label><br />
+                    <div class="form-control border border-primary">
+                        <input type="radio" [(ngModel)]="userObj.is_active" [checked]="userObj.is_active===1" class="text-center" name="is_active" required [value]="1"> Active
+                      <input type="radio" [(ngModel)]="userObj.is_active" [checked]="userObj.is_active===0" class="text-center" name="is_active" required [value]="0"> InActive
+                      <div class="invalid-feedback">
+                        Please Select a valid Status.
+                      </div>
+                    </div>
+                  </div>
+                }
+           </div>
+          <div class="col-12 pt-3">
+              @if(mode=='C'){
+                <button class="btn btn-primary" type="button" (click)="onSave()">Create User</button>
+                <button class="btn btn-primary m-1" type="reset">Reset</button>
+              }
+              @else{
+                <button class="btn btn-primary" type="button" (click)="onUpdate()">Update</button>
+              }
+           </div>
+          </form>
+        </div>
+    </div>
+</div>

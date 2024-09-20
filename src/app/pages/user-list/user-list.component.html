@@ -1,0 +1,117 @@
+<div class="row">
+    <div [ngClass]="isPanelShow?'col-8':'col-12'">
+        <div class="text-center">
+            <div class="spinner-grow" role="status" [style.display]="isVisible ? 'inline-block' : 'none'">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+         </div>
+         <table class="table table-responsive">
+                <thead>
+                <tr class="text-left table-bordered text-uppercase">
+                    <th style="width:10%">Sr No</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+        </thead>
+            <tbody>
+               @if (userListFound) {
+                @for (item of userList; track $index) {
+                    <tr>
+                        <td style="width:10%" [ngClass]="item.urole=='Admin'?' text-success fw-bolder':''">{{ $index + 1 }}</td>
+                        <td [ngClass]="item.urole=='Admin'?' text-success  fw-bolder':''">{{ item.ufullname }}</td>
+                        <td [ngClass]="item.urole=='Admin'?' text-success  fw-bolder':''">{{ item.username }}</td>
+                        <td [ngClass]="item.urole=='Admin'?' text-success  fw-bolder':''">{{ item.uremail }}</td>
+                        <td [ngClass]="item.urole=='Admin'?' text-success  fw-bolder':''">{{ item.urole }}</td>
+                        <td>
+                            @if(item.is_active==1) {
+                                <i class="bi bi-check-circle text-success"></i>
+                            }
+                            @else
+                            {
+                                <i class="bi bi-x-circle text-danger"></i>
+                            }
+                        </td>
+                        <td><button (click)="edit(item)" class="btn btn-sm btn-success m-1">Edit</button> 
+                            @if (item.urole == 'User'){
+                                <button (click)="delete(item.uid)" class="btn btn-sm btn-danger">Delete</button>
+                    }
+                    </td>
+                    </tr>
+                    }
+                }           
+                @else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center table-info">No Users Found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-4" *ngIf="isPanelShow">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        Edit User
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn btn-sm btn-success" (click)="closeSidePanel()">Close</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="">Full Name<span class="text-danger">&nbsp;*</span></label>
+                        <input type="text" name="ufullname" required class="form-control" [(ngModel)]="userObj.ufullname">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="">Username<span class="text-danger">&nbsp;*</span></label>
+                        <input type="text" name="username" required class="form-control" [(ngModel)]="userObj.username">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="">E-mail<span class="text-danger">&nbsp;*</span></label>
+                        <input type="email" name="uremail" class="form-control" [(ngModel)]="userObj.uremail">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="">Password<span class="text-danger">&nbsp;*</span></label>
+                        <input type="password" name="upassword" class="form-control" [(ngModel)]="userObj.upassword">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label for="">Status:<span class="text-danger">&nbsp;*</span></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="radio" name="is_active" [(ngModel)]="userObj.is_active" value="1">Active
+                        <input type="radio" name="is_active" [(ngModel)]="userObj.is_active" value="0">&nbsp;InActive
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label for="">User Role:<span class="text-danger">&nbsp;*</span></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="radio" name="urole" [(ngModel)]="userObj.urole" value="User">User
+                        <input type="radio" name="urole" [(ngModel)]="userObj.urole" value="Admin">&nbsp;Admin
+                    </div>
+                </div>
+            <div class="row pt-3">
+                    <div class="col-12 text-center">
+                        <button name="btn-submit" *ngIf="userList.uid !== 0" class="btn btn-primary" (click)="onUpdate()">Update User</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

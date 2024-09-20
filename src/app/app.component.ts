@@ -1,0 +1,21 @@
+import { Component,HostListener } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = 'User Management';
+   /* @HostListener('window:scroll')
+   onScroll(){
+    console.log('scrolling');
+   }
+   @HostListener('contextmenu')
+   onRightClick(event:Event){
+    event.preventDefault();
+   } */
+}
