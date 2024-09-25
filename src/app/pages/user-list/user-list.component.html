@@ -47,7 +47,6 @@
                     <nav aria-label="...">
                         <ul class="pagination justify-content-center">
                             <li [ngClass]="(curPage == page)?'page-item active':'page-item'" aria-current="page" *ngFor="let page of setPagination()">
-                                <!--<a class="page-link" [routerLink]="['/user-list',page]" href="javascript:return false;" (click)="onpageChange(page)">{{ page }}</a>-->
                                 <a class="page-link" href="javascript:void()" (click)="onpageChange(page)" >{{ page }}</a>
                             </li>
                         </ul>
