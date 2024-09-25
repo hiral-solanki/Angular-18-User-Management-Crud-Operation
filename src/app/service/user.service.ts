@@ -18,8 +18,10 @@ export class UserService {
   onLogin(obj:any){
     return this.http.post(Constant.API_END_Points + Constant.METHODS.LOGIN_USERS,obj);
   }
-  getUsers(){
-    return this.http.get(Constant.API_END_Points + Constant.METHODS.GET_ALL_USERS);
+  getUsers(page:number){
+    const params = new HttpParams();
+    params.set('page',page);
+    return this.http.get(`${Constant.API_END_Points + Constant.METHODS.GET_ALL_USERS}/${page}`);
   }
   signUpUsers(userFrm:any){
     return this.http.post(Constant.API_END_Points + Constant.METHODS.SIGNUP_USER,userFrm);

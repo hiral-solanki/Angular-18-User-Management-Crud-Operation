@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component,inject,OnInit } from '@angular/core';
 import { UserService } from '../../service/user.service';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule, JsonPipe, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/users';
@@ -21,12 +21,15 @@ export class UserListComponent {
   userListFound:boolean = true;
   isVisible: boolean = false;
   isPanelShow:boolean=false;
-  constructor(){
+  curPage:number=1;
+  noOfRecPerPage:number=5;
+  totalRec:number=0;
+  totalPage:number=1;
+  constructor(private aroute:ActivatedRoute){
     this.userObj = new User();
-
   }
   ngOnInit():void{
-    this.loadUser();
+    this.loadUser(this.curPage);
   }
   openSidePanel(){
     this.isPanelShow = true;
@@ -35,11 +38,16 @@ export class UserListComponent {
   closeSidePanel(){
     this.isPanelShow = false;
   }
-  loadUser(){
+  loadUser(cpage:number){
     this.isVisible = true;
-    this.userService.getUsers().subscribe({
+    let page= this.curPage;
+    this.userService.getUsers(cpage).subscribe({
       next: (res:any) => {
         this.userList = res.data;
+        this.curPage = res.page;
+        this.totalRec = res.totalRec;
+        this.noOfRecPerPage=res.noOfRecPerPage;
+        this.totalPage=res.totalPage;
         this.isVisible = false;
         this.userListFound = true; 
       },
@@ -48,6 +56,13 @@ export class UserListComponent {
         this.userListFound = false;
       }
     });
+  }
+  onpageChange(page:number){
+    this.curPage= page;
+    this.loadUser(page);
+  }
+  setPagination(){
+    return Array.from({length:this.totalPage},(_,i) => i+1);
   }
   edit(userObj:any){
     this.openSidePanel();
@@ -62,7 +77,7 @@ export class UserListComponent {
        {
         alert(res.message);
         this.closeSidePanel();
-        this.loadUser();
+        this.loadUser(this.curPage);
         }
      });
   
@@ -75,7 +90,7 @@ export class UserListComponent {
           if(res)
           {
             alert(res.message);
-            this.loadUser();
+            this.loadUser(this.curPage);
           }
           else
           {
